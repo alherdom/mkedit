@@ -9,7 +9,7 @@ def home(request):
     new_doc = Document.objects.create()
     form = EditDocumentForm()
     return render(request, "documents/edit.html", {"form":form, "doc":new_doc} )
-
+    # return redirect("documents:edit_documents")
 
 @require_http_methods(['GET', 'POST'])
 def edit_document(request, docref):
