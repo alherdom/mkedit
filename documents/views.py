@@ -18,12 +18,12 @@ def edit_document(request, docref):
     if request.method == "POST":
         if form.is_valid():
             doc = form.save()
+            messages = ["Document was successfully saved!"]
         else:
             messages = ["There are errors in form!"]
             return render(request, "documents/edit.html", {"form":form, "doc":doc, "messages":messages} )
-        return render(request, "documents/edit.html", {"form":form, "doc":doc} )
+        return render(request, "documents/edit.html", {"form":form, "doc":doc, "messages":messages})
 
-    # return redirect("documents:home")
 
 def render_document(request, docref):
     doc = get_object_or_404(Document, ref=docref)
