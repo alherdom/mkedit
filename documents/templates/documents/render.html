@@ -1,0 +1,28 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'documents/custom.css' %}">
+    <title>Alejandro - Render</title>
+</head>
+<body>
+    <table>
+        <tbody>
+            <tr>
+                <th>Created</th>
+                <td>{{ doc.created }}</td>
+            </tr>
+            <tr>
+                <th>Updated</th>
+                <td>{{ doc.updated }}</td>
+            </tr>
+        </tbody>
+    </table>
+    <hr>
+    <h1>{{ doc.title }}</h1>
+    <p>{{ markdown_contents|safe }}</p>
+</body>
+</html>
