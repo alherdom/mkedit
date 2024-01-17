@@ -1,4 +1,5 @@
 import markdown
+from django.contrib import messages
 from django.views.decorators.http import require_http_methods
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Document
@@ -7,9 +8,7 @@ from .forms import EditDocumentForm
 
 def home(request):
     new_doc = Document.objects.create()
-    form = EditDocumentForm()
-    return render(request, "documents/edit.html", {"form":form, "doc":new_doc} )
-    # return redirect("documents:edit_documents")
+    return redirect("documents:edit_document", docref=new_doc.ref)
 
 @require_http_methods(['GET', 'POST'])
 def edit_document(request, docref):
@@ -18,11 +17,11 @@ def edit_document(request, docref):
     if request.method == "POST":
         if form.is_valid():
             doc = form.save()
-            messages = ["Document was successfully saved!"]
+            messages.success(request, "Document was successfully saved!")
         else:
-            messages = ["There are errors in form!"]
-            return render(request, "documents/edit.html", {"form":form, "doc":doc, "messages":messages} )
-        return render(request, "documents/edit.html", {"form":form, "doc":doc, "messages":messages})
+            messages.error(request, "There are errors in form!")
+        return render(request, "documents/edit.html", {"form":form, "doc":doc} )
+    return render(request, "documents/edit.html", {"form":form, "doc":doc})
 
 
 def render_document(request, docref):
